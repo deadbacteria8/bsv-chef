@@ -13,6 +13,15 @@ def rc_controller():
     return RecipeController(dao)
 
 
+def test_no_recipes(rc_controller):
+    mock_recipes = {
+    }
+    #mocking get_readiness_of_recipes return
+    with patch.object(rc_controller, "get_readiness_of_recipes") as readiness_of_recipes:
+        readiness_of_recipes.return_value = mock_recipes
+        recipe = rc_controller.get_recipe(False, {})
+        assert recipe == None
+
 def test_readiness_under_01(rc_controller):
     mock_recipes = {
         "Recipe2": 0.09
